@@ -3,10 +3,6 @@ const jwt = require("jsonwebtoken");
 const blacklistModel = require("../models/blacklist.model");
 const userModel = require("../models/user.model");
 
-const foodPartnerModel = require("../models/foodpartner.model");
-const jwt = require("jsonwebtoken");
-const blacklistModel = require("../models/blacklist.model");
-const userModel = require("../models/user.model");
 
 async function foodPartnerMiddleware(req, res, next) {
     console.log("🟡 [PARTNER-AUTH] Middleware triggered for:", req.method, req.originalUrl);
