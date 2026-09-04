@@ -1,13 +1,13 @@
 const foodModel = require("../models/food.model") ; // food.model.js file me foodModel ko import kiya gaya hai taki food collection ke liye schema define kiya ja sake  
 const storageService = require("../services/storage.service") ; // storage.service.js file me storageService ko import kiya gaya hai taki image ko upload kiya ja sake
-const {v4:uuid} = require("uuid") ; // uuid package ko import kiya gaya hai taki unique id generate kiya ja sake
+const crypto = require("crypto") ; // crypto package ko import kiya gaya hai taki unique id generate kiya ja sake
 const likeModel = require("../models/likes.model") ; // likes.model.js file me likeModel ko import kiya gaya hai taki likes collection ke liye schema define kiya ja sake
 const saveModel = require("../models/save.model") ; // save.model.js file me saveModel ko import kiya gaya hai taki save collection ke liye schema define kiya ja sake
 async function createFood(req, res) {
     try{
     console.log( "Logging food partner:" ,req.foodPartner) ; // food partner ke liye request object me foodPartner ko log kiya jata hai taki check kiya ja sake ki food partner exist karta hai ya nahi
 
-    const uniqueId = uuid() ; // unique id generate kiya jata hai taki food ke liye unique id create kiya ja sake
+  const uniqueId = crypto.randomUUID(); // crypto package ka randomUUID function use kiya jata hai taki unique id generate kiya ja sake
     console.log("Unique ID" , uniqueId) ; // unique id generate kiya jata hai taki food ke liye unique id create kiya ja sake
 
     // 1. Cloudinary/ImageKit par upload karein
