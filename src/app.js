@@ -9,48 +9,50 @@ const cors = require("cors");
 
 const app = express();
 
-// Single clean CORS setup with wildcard subdomain & localhost support
+// Clean CORS setup
 app.use(
-    cors({
-        origin: (origin, callback) => {
-            if (!origin) return callback(null, true);
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
 
-            const isAllowed =
-                origin.startsWith("http://localhost:") ||
-                origin.endsWith(".vercel.app");
+      const isAllowed =
+        origin.startsWith("http://localhost:") ||
+        origin.endsWith(".vercel.app");
 
-            if (isAllowed) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        },
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"]
-    })
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 
-// Preflight handler
-app.options("*", cors());
-
-// Payload size limit for handling media payloads
+// Payload size limit for media uploads
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 
-// Database connection middleware for Serverless
+// Database connection middleware with error safety
 app.use(async (req, res, next) => {
+  try {
     await connectDB();
     next();
+  } catch (err) {
+    console.error("Database connection failed:", err.message);
+    res.status(500).json({ message: "Database connection failed", error: err.message });
+  }
 });
 
 app.get("/", (req, res) => {
-    res.status(200).send("Hello Everyone! Backend is live and running.");
+  res.status(200).send("Hello Everyone! Backend is live and running.");
 });
 
 app.use("/api/food", foodRoutes);
 app.use("/api/auth", authRoutes);
-app.use('/api/food-partner', foodPartnerRoutes);
+app.use("/api/food-partner", foodPartnerRoutes);
 
 module.exports = app;
