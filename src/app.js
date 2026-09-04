@@ -26,6 +26,9 @@ app.use(async (req, res, next) => {
 app.get("/" , (req,res) => { // "/" route ke liye GET request handle ki ja rahi hai
     res.send("Hello Everyone")
 })
+app.get("/", (req, res) => {
+  res.status(200).send("Hello Everyone! Backend is live and running.");
+});
 
 app.use("/api/food" , foodRoutes) ; // "/api/food" route ke liye foodRoutes ko use kiya gaya hai taki food related routes define kiya ja sake
 

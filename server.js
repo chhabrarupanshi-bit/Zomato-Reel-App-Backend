@@ -1,11 +1,13 @@
-// Set up the Express app and this file is the entry point for the backend server
-require("dotenv").config() ; // dotenv package ko import kiya gaya hai taki environment variables ko access kiya ja sake
-const app = require("./src/app") ;
+require("dotenv").config();
+const app = require("./src/app");
 
-
-app.listen(3000 , () => {
-    console.log("Server is running on port 3000") ;
-})  
+// Local development ke liye app.listen, Vercel production par serverless handle karega
+const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 // ⭐ VERCEL DEPLOYMENT KE LIYE ZAROORI ⭐
 module.exports = app;
