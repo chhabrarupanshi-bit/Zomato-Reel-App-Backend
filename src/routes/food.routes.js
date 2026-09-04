@@ -20,7 +20,7 @@ router.post(
 );
 
 router.get('/get-items' , 
-    authMiddlewares.authUserOrPartner , // 1. Auth check
+   // authMiddlewares.authUserOrPartner , // 1. Auth check
     foodController.getFoodItems        // 2. Controller run hoga 
 );
 
