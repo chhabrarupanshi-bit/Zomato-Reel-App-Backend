@@ -25,7 +25,12 @@ async function registerUser(req, res) {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-        res.cookie("token", token, { httpOnly: true });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,       // HTTPS zaroori hai cross-domain ke liye
+            sameSite: "none",   // Cross-site cookie allow karne ke liye MOST IMPORTANT
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
         return res.status(201).json({
             message: "User registered successfully",
@@ -59,7 +64,12 @@ async function loginUser(req, res) {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-        res.cookie("token", token, { httpOnly: true });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,       // HTTPS zaroori hai cross-domain ke liye
+            sameSite: "none",   // Cross-site cookie allow karne ke liye MOST IMPORTANT
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
         return res.status(200).json({
             message: "User logged in successfully",
             user: {
@@ -111,7 +121,12 @@ async function registerFoodPartner(req, res) {
         });
 
         const token = jwt.sign({ id: foodPartner._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-        res.cookie("token", token, { httpOnly: true });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,       // HTTPS zaroori hai cross-domain ke liye
+            sameSite: "none",   // Cross-site cookie allow karne ke liye MOST IMPORTANT
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
         return res.status(201).json({
             message: "Food Partner registered successfully",
