@@ -9,7 +9,7 @@ const foodPartnerController = require("../controller/food-partner.controller");
 
 // GET /api/food-partner/:id
 router.get('/:id', 
-   authMiddlewares.authUserOrPartner, // 1. Auth check
+  // authMiddlewares.authUserOrPartner, // 1. Auth check
     foodPartnerController.getFoodPartnerById        // 2. Controller run hoga
 ) 
 
