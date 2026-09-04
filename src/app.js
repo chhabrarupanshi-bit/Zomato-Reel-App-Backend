@@ -17,7 +17,11 @@ app.use(cors({
 app.use(express.json()) ; // express ka json middleware use kiya gaya hai taki request body ko json format me parse kiya ja sake
 app.use(cookieParser()) ; // cookie-parser middleware ko use kiya gaya hai taki cookies ko parse kiya ja sake
 
-connectDB() ; // connectDb function ko call kiya gaya hai taki MongoDB se connection establish ho sake
+// Purana connectDB(); hata kar yeh likhein:
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});  // connectDb function ko call kiya gaya hai taki MongoDB se connection establish ho sake
 
 app.get("/" , (req,res) => { // "/" route ke liye GET request handle ki ja rahi hai
     res.send("Hello Everyone")
