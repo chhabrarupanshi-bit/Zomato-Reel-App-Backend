@@ -9,7 +9,9 @@ const foodPartnerRoutes = require("./routes/food-partner.route") ; // food-partn
 const app = express(); // app.js file me express ka instance create kiya gaya hai
 const cors = require("cors") ; // cors package ko import kiya gaya hai taki cross-origin requests ko allow kiya ja sake
 app.use(cors({
-    origin : "http://localhost:5173" , // frontend ke liye origin ko allow kiya jata hai taki frontend se backend ke liye requests bheji ja sake
+    origin : ["http://localhost:5173" , 
+    "http://localhost:3000",
+    "https://zomato-reel-app.vercel.app" ],// Aapka live Vercel frontend URL// frontend ke liye origin ko allow kiya jata hai taki frontend se backend ke liye requests bheji ja sake
     credentials : true , // credentials ko allow kiya jata hai taki cookies ko access kiya ja sake
 })) ;
 app.use(express.json()) ; // express ka json middleware use kiya gaya hai taki request body ko json format me parse kiya ja sake
